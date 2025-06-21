@@ -1,5 +1,5 @@
-﻿using System.Reflection.Metadata;
-class Program
+using System.Reflection.Metadata;
+class App
 {
     static void Main()
     {
@@ -7,130 +7,128 @@ class Program
 1.Basic
 2.Pro
 3.Expert");
-        string choice = Console.ReadLine();
-        DocumentProgram docProgram;
+        string secim = Console.ReadLine();
+        SənədProqrami proqram;
 
-        if (choice == "1")
+        if (secim == "1")
         {
-            docProgram = new DocumentProgram();
+            proqram = new SənədProqrami();
         }
-        else if (choice == "2")
+        else if (secim == "2")
         {
-            docProgram = new ProDocumentProgram();
+            proqram = new ProSənədProqrami();
         }
-        else if (choice == "3")
+        else if (secim == "3")
         {
-            docProgram = new ExpertDocument();
+            proqram = new EkspertSənəd();
         }
         else
         {
-            Console.WriteLine("Wrong input!");
+            Console.WriteLine("Yanlış seçim!");
             return;
         }
 
-
-        string[] options = { "Open Document", "Edit Document", "Save Document", "Exit" };
-        int selectedIndex = 0;
+        string[] menyu = { "Sənədi Aç", "Sənədi Redaktə Et", "Sənədi Yadda Saxla", "Çıxış" };
+        int secilmis = 0;
 
         while (true)
         {
             Console.Clear();
-            Console.WriteLine("Use Up/Down arrows and Enter to select an option:\n");
+            Console.WriteLine("Yuxarı/Aşağı oxlarla hərəkət edin və Enter ilə seçin:\n");
 
-            for (int i = 0; i < options.Length; i++)
+            for (int i = 0; i < menyu.Length; i++)
             {
-                if (i == selectedIndex)
-                    Console.WriteLine($"> {options[i]}");
+                if (i == secilmis)
+                    Console.WriteLine($"> {menyu[i]}");
                 else
-                    Console.WriteLine($"  {options[i]}");
+                    Console.WriteLine($"  {menyu[i]}");
             }
 
-            ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+            ConsoleKeyInfo klik = Console.ReadKey(true);
 
-            if (keyInfo.Key == ConsoleKey.UpArrow)
+            if (klik.Key == ConsoleKey.UpArrow)
             {
-                selectedIndex--;
-                if (selectedIndex < 0) selectedIndex = options.Length - 1;
+                secilmis--;
+                if (secilmis < 0) secilmis = menyu.Length - 1;
             }
-            else if (keyInfo.Key == ConsoleKey.DownArrow)
+            else if (klik.Key == ConsoleKey.DownArrow)
             {
-                selectedIndex++;
-                if (selectedIndex >= options.Length) selectedIndex = 0;
+                secilmis++;
+                if (secilmis >= menyu.Length) secilmis = 0;
             }
-            else if (keyInfo.Key == ConsoleKey.Enter)
+            else if (klik.Key == ConsoleKey.Enter)
             {
                 Console.Clear();
 
-                if (selectedIndex == 0)
+                if (secilmis == 0)
                 {
-                    docProgram.OpenDocument();
+                    proqram.Ac();
                 }
-                else if (selectedIndex == 1)
+                else if (secilmis == 1)
                 {
-                    docProgram.EditDocument();
+                    proqram.RedakteEt();
                 }
-                else if (selectedIndex == 2)
+                else if (secilmis == 2)
                 {
-                    docProgram.SaveDocument();
+                    proqram.YaddaSaxla();
                 }
-                else if (selectedIndex == 3)
+                else if (secilmis == 3)
                 {
-                    Console.WriteLine("Exiting...");
+                    Console.WriteLine("Çıxılır...");
                     return;
                 }
 
-                Console.WriteLine("\nPress any key to return to menu...");
+                Console.WriteLine("\nDavam etmək üçün istənilən düyməyə bas...");
                 Console.ReadKey();
             }
         }
     }
 
-
-    public class DocumentProgram
+    public class SənədProqrami
     {
-        public void OpenDocument()
+        public void Ac()
         {
-            System.Console.WriteLine("Document opened");
+            System.Console.WriteLine("Sənəd açıldı");
         }
-        public virtual void EditDocument()
+        public virtual void RedakteEt()
         {
-            System.Console.WriteLine("Can edit in Pro and Expert versions");
+            System.Console.WriteLine("Yalnız Pro və Ekspert versiyalarda redaktə mümkündür");
         }
-        public virtual void SaveDocument()
+        public virtual void YaddaSaxla()
         {
-            System.Console.WriteLine("Can save in Pro and Expert versions");
+            System.Console.WriteLine("Yalnız Pro və Ekspert versiyalarda yadda saxlamaq mümkündür");
         }
     }
 
-    public class ProDocumentProgram : DocumentProgram
+    public class ProSənədProqrami : SənədProqrami
     {
-        public void OpenDocument()
+        public void Ac()
         {
-            System.Console.WriteLine("Document opened");
+            System.Console.WriteLine("Sənəd açıldı");
         }
-        public sealed override void EditDocument()
+        public sealed override void RedakteEt()
         {
-            System.Console.WriteLine("Document Edited");
+            System.Console.WriteLine("Sənəd redaktə olundu");
         }
-        public override void SaveDocument()
+        public override void YaddaSaxla()
         {
-            System.Console.WriteLine("Document saved in doc format,for pdf format buy Expert packet");
+            System.Console.WriteLine("Sənəd doc formatında yadda saxlanıldı, pdf üçün Ekspert paketi alın");
         }
     }
 
-    public class ExpertDocument : ProDocumentProgram
+    public class EkspertSənəd : ProSənədProqrami
     {
-        public void OpenDocument()
+        public void Ac()
         {
-            System.Console.WriteLine("Document opened");
+            System.Console.WriteLine("Sənəd açıldı");
         }
-        public void EditDocument()
+        public void RedakteEt()
         {
-            System.Console.WriteLine("Document Edited");
+            System.Console.WriteLine("Sənəd redaktə olundu");
         }
-        public override void SaveDocument()
+        public override void YaddaSaxla()
         {
-            System.Console.WriteLine("Document saved in pdf format");
+            System.Console.WriteLine("Sənəd pdf formatında yadda saxlanıldı");
         }
     }
 }
